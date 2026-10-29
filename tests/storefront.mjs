@@ -10,8 +10,9 @@ const config=JSON.parse(await readFile(path.join(fixture,'quote.json'),'utf8')).
 const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
 try{
  const context=await browser.newContext({ignoreHTTPSErrors:true});
- const page=await context.newPage();const errors=[];
+ const page=await context.newPage();const errors=[],diagnostics=[];
  page.on('pageerror',e=>errors.push(e.stack));
+ page.on('console',m=>{if(m.type()==='error')diagnostics.push(m.text());});
  await page.route('**/*',async route=>{
    const u=new URL(route.request().url());
    assert.equal(u.hostname,'shop.example.test','No external request');
@@ -32,7 +33,8 @@ try{
  for(const width of [1440,390]){
    await page.setViewportSize({width,height:900});
    await page.goto('https://shop.example.test/checkout/');
-   await page.locator('#whollycrypto').waitFor({state:'visible'});
+   try { await page.locator('#whollycrypto').waitFor({state:'visible'}); }
+   catch(error){console.error(JSON.stringify({errors,diagnostics}));await page.screenshot({path:path.join(fixture,'checkout-failure.png'),fullPage:true});throw error;}
    await page.locator('#whollycrypto').check();
    await page.getByText('Choose a network and token on the secure Wholly Crypto checkout.').waitFor({state:'visible'});
    assert.equal(await page.locator('#whollycrypto').isChecked(),true);
