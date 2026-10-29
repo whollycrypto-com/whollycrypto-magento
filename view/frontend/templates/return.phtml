@@ -1,0 +1,17 @@
+<?php
+/** @var \WhollyCrypto\Payment\Block\Checkout $block */
+$summary = $block->summary();
+?>
+<?php if ($summary): ?>
+<p><?= $block->escapeHtml(__('Order %1', $summary['number'])) ?></p>
+<?php if ($summary['verification'] === 'paid'): ?>
+<div class="message success"><?= $block->escapeHtml(__('Your payment has been verified. Thank you!')) ?></div>
+<?php elseif ($summary['can_pay']): ?>
+<div class="message notice"><?= $block->escapeHtml(__('Your payment is not confirmed yet. Confirmation can take a few minutes. Do not send a second payment if you have already paid.')) ?></div>
+<p><a class="action primary" href="<?= $block->escapeUrl($block->getUrl('whollycrypto/payment/start', ['_secure' => true])) ?>"><?= $block->escapeHtml(__('Open payment page')) ?></a></p>
+<?php else: ?>
+<div class="message notice"><?= $block->escapeHtml(__('This order needs a check by the shop. Contact the shop before sending any more funds.')) ?></div>
+<?php endif; ?>
+<?php else: ?>
+<p><?= $block->escapeHtml(__('Check your order confirmation or contact the shop for the current payment status. Returning here does not confirm a payment.')) ?></p>
+<?php endif; ?>

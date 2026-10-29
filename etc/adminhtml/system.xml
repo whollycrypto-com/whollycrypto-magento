@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+  <system><section id="payment"><group id="whollycrypto" translate="label comment" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+    <label>Wholly Crypto</label>
+    <comment><![CDATA[Connect your own Wholly Crypto store. Wallet keys stay in Wholly Crypto. Enable Store → IPN; the plugin supplies the callback URL. <a href="https://github.com/whollycrypto-com/whollycrypto-magento#connection-settings" target="_blank" rel="noopener noreferrer">Setup guide</a>]]></comment>
+    <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1"><label>Enabled</label><source_model>Magento\Config\Model\Config\Source\Yesno</source_model></field>
+    <field id="title" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1"><label>Checkout title</label><validate>required-entry</validate></field>
+    <field id="api_url" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1"><label>API URL</label><comment>https://api.example.com (no /v1)</comment><backend_model>WhollyCrypto\Payment\Model\Config\Validate</backend_model><validate>required-entry validate-url</validate></field>
+    <field id="pay_url" translate="label comment" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1"><label>Checkout URL</label><comment>https://pay.example.com (match the Wholly store's default domain)</comment><backend_model>WhollyCrypto\Payment\Model\Config\Validate</backend_model><validate>required-entry validate-url</validate></field>
+    <field id="project_id" translate="label comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1"><label>Project API ID</label><comment>UUID from Project → Stores → Basic → API IDs.</comment><backend_model>WhollyCrypto\Payment\Model\Config\Validate</backend_model></field>
+    <field id="store_id" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1"><label>Store API ID</label><backend_model>WhollyCrypto\Payment\Model\Config\Validate</backend_model></field>
+    <field id="api_key" translate="label comment" type="obscure" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1"><label>API credential</label><comment>Read/write access restricted to this project. Stored encrypted.</comment><backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model></field>
+    <field id="ipn_secret" translate="label comment" type="obscure" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1"><label>Store IPN signing secret</label><comment>Store → IPN. Enable IPN and allow server-to-server callbacks without a login or CAPTCHA.</comment><backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model></field>
+    <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1"><label>Sort order</label><validate>validate-number</validate></field>
+  </group></section></system>
+</config>

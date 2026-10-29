@@ -1,0 +1,14 @@
+<?php
+/** @var \WhollyCrypto\Payment\Block\Checkout $block */
+$summary = $block->summary();
+?>
+<?php if ($summary && $summary['can_pay']): ?>
+<p><?= $block->escapeHtml(__('Order %1 is waiting for payment.', $summary['number'])) ?></p>
+<p><?= $block->escapeHtml(__('You will continue to Wholly Crypto to choose a network and token. If you already sent funds, do not pay again.')) ?></p>
+<form method="post" action="<?= $block->escapeUrl($block->getUrl('whollycrypto/payment/redirect', ['_secure' => true])) ?>" data-mage-init='{"WhollyCrypto_Payment/js/redirect":{"auto":<?= $block->getRequest()->getParam('retry') ? 'false' : 'true' ?>}}'>
+    <?= $block->getBlockHtml('formkey') ?>
+    <button class="action primary" type="submit"><span><?= $block->escapeHtml(__('Continue to payment')) ?></span></button>
+</form>
+<?php else: ?>
+<p><?= $block->escapeHtml(__('This order is no longer waiting for payment, or your checkout session has ended. Check your order or contact the shop before paying again.')) ?></p>
+<?php endif; ?>

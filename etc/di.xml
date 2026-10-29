@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+  <type name="Magento\Framework\Console\CommandList"><arguments><argument name="commands" xsi:type="array"><item name="whollycrypto_reconcile" xsi:type="object">WhollyCrypto\Payment\Console\Reconcile</item></argument></arguments></type>
+  <type name="Magento\Config\Model\Config\TypePool"><arguments>
+    <argument name="sensitive" xsi:type="array"><item name="payment/whollycrypto/api_key" xsi:type="string">1</item><item name="payment/whollycrypto/ipn_secret" xsi:type="string">1</item></argument>
+    <argument name="environment" xsi:type="array"><item name="payment/whollycrypto/api_url" xsi:type="string">1</item><item name="payment/whollycrypto/pay_url" xsi:type="string">1</item><item name="payment/whollycrypto/project_id" xsi:type="string">1</item><item name="payment/whollycrypto/store_id" xsi:type="string">1</item></argument>
+  </arguments></type>
+</config>
